@@ -1,0 +1,1727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script>
+var spkRate = 0.78;
+var spkActive = null;
+function spk(btn) {
+  var text = btn.getAttribute("data-text");
+  if (!text || !window.speechSynthesis) return;
+  window.speechSynthesis.cancel();
+  if (spkActive) spkActive.className = "play-btn";
+  var u = new SpeechSynthesisUtterance(text);
+  u.lang = "es-ES";
+  u.rate = spkRate;
+  var voices = window.speechSynthesis.getVoices();
+  for (var i = 0; i < voices.length; i++) {
+    if (voices[i].lang === "es-ES") { u.voice = voices[i]; break; }
+  }
+  btn.className = "play-btn playing";
+  spkActive = btn;
+  u.onend = function() { btn.className = "play-btn"; spkActive = null; };
+  u.onerror = function() { btn.className = "play-btn"; spkActive = null; };
+  window.speechSynthesis.speak(u);
+}
+function setSpd(btn) {
+  spkRate = parseFloat(btn.getAttribute("data-speed"));
+  var all = document.getElementsByClassName("speed-btn");
+  for (var i = 0; i < all.length; i++) all[i].className = "speed-btn";
+  btn.className = "speed-btn active";
+}
+</script>
+<title>Spanish for Spain — Family Travel Phrasebook</title>
+<style>
+  :root {
+    --sun: #F59E0B;
+    --sun-light: #FEF3C7;
+    --terra: #DC2626;
+    --terra-light: #FEE2E2;
+    --sky: #1E40AF;
+    --sky-light: #DBEAFE;
+    --olive: #15803D;
+    --olive-light: #DCFCE7;
+    --sand: #FAF7F2;
+    --ink: #1C1917;
+    --stone: #57534E;
+    --warm-white: #FFFBF5;
+    --border: #E7E5E4;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+    background: var(--sand);
+    color: var(--ink);
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -webkit-text-size-adjust: 100%;
+  }
+  .hero {
+    background: linear-gradient(135deg, #B91C1C 0%, #DC2626 40%, #F59E0B 100%);
+    color: white;
+    padding: 3rem 1.5rem 2.5rem;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero h1 {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin-bottom: 0.4rem;
+    letter-spacing: -0.5px;
+  }
+  .hero p {
+    font-size: 1.05rem;
+    opacity: 0.9;
+    max-width: 500px;
+    margin: 0 auto;
+  }
+  .instructions {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 1.2rem 1.5rem;
+    margin: 1.5rem 1.5rem 0.5rem;
+    font-size: 0.9rem;
+    color: var(--stone);
+    line-height: 1.7;
+  }
+  .instructions strong { color: var(--ink); }
+  .speed-toggle {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    gap: 0.5rem;
+    margin: 1.5rem 1.5rem 0;
+    padding: 0.8rem;
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+  }
+  .speed-toggle label {
+    font-size: 0.85rem;
+    color: var(--stone);
+    font-weight: 500;
+  }
+  .speed-btn {
+    padding: 0.35rem 0.8rem;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    background: white;
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    color: var(--stone);
+    -webkit-appearance: none;
+  }
+  .speed-btn.active {
+    background: var(--sky);
+    color: white;
+    border-color: var(--sky);
+  }
+  .container {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 0.5rem 1.5rem 4rem;
+  }
+  .section {
+    margin-top: 2rem;
+  }
+  .section-header {
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 1rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid var(--border);
+  }
+  .section-icon {
+    font-size: 1.6rem;
+    width: 42px;
+    height: 42px;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    border-radius: 10px;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+  }
+  .section-header h2 {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--ink);
+  }
+  .section-note {
+    font-size: 0.85rem;
+    color: var(--stone);
+    margin-bottom: 1rem;
+    font-style: italic;
+  }
+  .theme-sun .section-icon { background: var(--sun-light); }
+  .theme-sun .section-header { border-color: var(--sun); }
+  .theme-terra .section-icon { background: var(--terra-light); }
+  .theme-terra .section-header { border-color: var(--terra); }
+  .theme-sky .section-icon { background: var(--sky-light); }
+  .theme-sky .section-header { border-color: var(--sky); }
+  .theme-olive .section-icon { background: var(--olive-light); }
+  .theme-olive .section-header { border-color: var(--olive); }
+  .phrase {
+    background: var(--warm-white);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 0.9rem 1rem;
+    margin-bottom: 0.6rem;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .phrase-content {
+    -webkit-flex: 1;
+    flex: 1;
+    min-width: 0;
+  }
+  .phrase-es {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: var(--ink);
+    margin-bottom: 2px;
+  }
+  .phrase-en {
+    font-size: 0.88rem;
+    color: var(--stone);
+  }
+  .phrase-pronun {
+    font-size: 0.78rem;
+    color: var(--sky);
+    font-style: italic;
+    margin-top: 2px;
+  }
+  .play-btn {
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    border: 2px solid var(--border);
+    background: white;
+    color: var(--terra);
+    font-size: 1.1rem;
+    cursor: pointer;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-align-items: center;
+    align-items: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-flex-shrink: 0;
+    flex-shrink: 0;
+    -webkit-appearance: none;
+    line-height: 1;
+  }
+  .play-btn.playing {
+    background: var(--terra);
+    color: white;
+    border-color: var(--terra);
+  }
+  .tips-box {
+    background: linear-gradient(135deg, var(--sky-light), #EDE9FE);
+    border-radius: 12px;
+    padding: 1.3rem 1.5rem;
+    margin-top: 2rem;
+  }
+  .tips-box h3 {
+    font-size: 1.2rem;
+    font-weight: 700;
+    margin-bottom: 0.7rem;
+  }
+  .tips-box ul { list-style: none; padding: 0; }
+  .tips-box li {
+    padding: 0.35rem 0;
+    font-size: 0.9rem;
+    color: var(--ink);
+  }
+  .tips-box li strong { color: var(--sky); }
+  .footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.8rem;
+    color: var(--stone);
+    opacity: 0.6;
+  }
+  @media (max-width: 500px) {
+    .hero h1 { font-size: 1.8rem; }
+    .container { padding: 0.5rem 1rem 3rem; }
+    .instructions { margin: 1rem 1rem 0.5rem; }
+    .speed-toggle { margin: 1rem 1rem 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>&#161;V&aacute;monos a Espa&ntilde;a!</h1>
+  <p>Your family&#8217;s pocket phrasebook &#8212; 157 phrases with audio for every situation</p>
+</div>
+
+<div class="instructions">
+  <strong>How to use:</strong> Tap the &#x1F50A; button next to any phrase to hear it pronounced in Spanish. Use the speed control below to slow it down while you&#8217;re learning.
+</div>
+
+<div class="speed-toggle">
+  <label>&#x1F422; Speech speed:</label>
+  <button class="speed-btn" onclick="setSpd(this)" data-speed="0.55">Slow</button>
+  <button class="speed-btn active" onclick="setSpd(this)" data-speed="0.78">Normal</button>
+  <button class="speed-btn" onclick="setSpd(this)" data-speed="1">Native</button>
+</div>
+
+<div class="container">
+
+  <div class="section theme-sun">
+    <div class="section-header">
+      <div class="section-icon">👋</div>
+      <h2>Greetings &amp; Basics</h2>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Hola</div>
+        <div class="phrase-en">Hi / Hello</div>
+        <div class="phrase-pronun">OH-lah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Hola" aria-label="Listen to Hola">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Buenos días</div>
+        <div class="phrase-en">Good morning</div>
+        <div class="phrase-pronun">BWEH-nos DEE-as</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Buenos días" aria-label="Listen to Buenos días">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Buenas tardes</div>
+        <div class="phrase-en">Good afternoon</div>
+        <div class="phrase-pronun">BWEH-nas TAR-des</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Buenas tardes" aria-label="Listen to Buenas tardes">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Buenas noches</div>
+        <div class="phrase-en">Good evening / Good night</div>
+        <div class="phrase-pronun">BWEH-nas NO-ches</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Buenas noches" aria-label="Listen to Buenas noches">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Adiós</div>
+        <div class="phrase-en">Goodbye</div>
+        <div class="phrase-pronun">ah-dee-OHS</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Adiós" aria-label="Listen to Adiós">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Hasta luego</div>
+        <div class="phrase-en">See you later</div>
+        <div class="phrase-pronun">AH-stah LWEH-go</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Hasta luego" aria-label="Listen to Hasta luego">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Qué tal?</div>
+        <div class="phrase-en">How&#x27;s it going?</div>
+        <div class="phrase-pronun">keh TAHL</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Qué tal?" aria-label="Listen to ¿Qué tal?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Muy bien, gracias</div>
+        <div class="phrase-en">Very well, thanks</div>
+        <div class="phrase-pronun">mwee BYEN, GRAH-thee-as</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Muy bien, gracias" aria-label="Listen to Muy bien, gracias">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-terra">
+    <div class="section-header">
+      <div class="section-icon">✨</div>
+      <h2>Magic Words</h2>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Por favor</div>
+        <div class="phrase-en">Please</div>
+        <div class="phrase-pronun">por fah-VOR</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Por favor" aria-label="Listen to Por favor">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Gracias</div>
+        <div class="phrase-en">Thank you</div>
+        <div class="phrase-pronun">GRAH-thee-as</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Gracias" aria-label="Listen to Gracias">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Muchas gracias</div>
+        <div class="phrase-en">Thank you very much</div>
+        <div class="phrase-pronun">MOO-chas GRAH-thee-as</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Muchas gracias" aria-label="Listen to Muchas gracias">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">De nada</div>
+        <div class="phrase-en">You&#x27;re welcome</div>
+        <div class="phrase-pronun">deh NAH-dah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="De nada" aria-label="Listen to De nada">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Perdona</div>
+        <div class="phrase-en">Excuse me / Sorry</div>
+        <div class="phrase-pronun">per-DOH-nah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Perdona" aria-label="Listen to Perdona">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Lo siento</div>
+        <div class="phrase-en">I&#x27;m sorry</div>
+        <div class="phrase-pronun">lo SYEN-toh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Lo siento" aria-label="Listen to Lo siento">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Sí</div>
+        <div class="phrase-en">Yes</div>
+        <div class="phrase-pronun">SEE</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Sí" aria-label="Listen to Sí">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">No</div>
+        <div class="phrase-en">No</div>
+        <div class="phrase-pronun">NOH</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="No" aria-label="Listen to No">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-sun">
+    <div class="section-header">
+      <div class="section-icon">🍽️</div>
+      <h2>At Restaurants</h2>
+    </div>
+    <p class="section-note">Lunch is 2–3pm, dinner is 9–10pm in Spain!</p>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Una mesa para seis, por favor</div>
+        <div class="phrase-en">A table for six, please</div>
+        <div class="phrase-pronun">OO-nah MEH-sah PAH-rah SEH-ees</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Una mesa para seis, por favor" aria-label="Listen to Una mesa para seis, por favor">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Somos seis</div>
+        <div class="phrase-en">We are six</div>
+        <div class="phrase-pronun">SOH-mos SEH-ees</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Somos seis" aria-label="Listen to Somos seis">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">La carta, por favor</div>
+        <div class="phrase-en">The menu, please</div>
+        <div class="phrase-pronun">lah KAR-tah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="La carta, por favor" aria-label="Listen to La carta, por favor">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Qué recomienda?</div>
+        <div class="phrase-en">What do you recommend?</div>
+        <div class="phrase-pronun">keh reh-ko-MYEN-dah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Qué recomienda?" aria-label="Listen to ¿Qué recomienda?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">La cuenta, por favor</div>
+        <div class="phrase-en">The check, please</div>
+        <div class="phrase-pronun">lah KWEN-tah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="La cuenta, por favor" aria-label="Listen to La cuenta, por favor">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Agua sin gas</div>
+        <div class="phrase-en">Still water</div>
+        <div class="phrase-pronun">AH-gwah seen gahs</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Agua sin gas" aria-label="Listen to Agua sin gas">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Agua con gas</div>
+        <div class="phrase-en">Sparkling water</div>
+        <div class="phrase-pronun">AH-gwah kon gahs</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Agua con gas" aria-label="Listen to Agua con gas">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Una cerveza, por favor</div>
+        <div class="phrase-en">A beer, please</div>
+        <div class="phrase-pronun">OO-nah ther-VEH-thah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Una cerveza, por favor" aria-label="Listen to Una cerveza, por favor">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Un vino tinto</div>
+        <div class="phrase-en">A red wine</div>
+        <div class="phrase-pronun">oon VEE-no TEEN-toh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Un vino tinto" aria-label="Listen to Un vino tinto">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Un vino blanco</div>
+        <div class="phrase-en">A white wine</div>
+        <div class="phrase-pronun">oon VEE-no BLAHN-koh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Un vino blanco" aria-label="Listen to Un vino blanco">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Tienen menú infantil?</div>
+        <div class="phrase-en">Do you have a kids&#x27; menu?</div>
+        <div class="phrase-pronun">TYEH-nen meh-NOO in-fan-TEEL</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Tienen menú infantil?" aria-label="Listen to ¿Tienen menú infantil?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Cuatro de niño y dos de adulto</div>
+        <div class="phrase-en">Four kids&#x27; and two adult</div>
+        <div class="phrase-pronun">KWAH-tro deh NEE-nyo ee dos deh ah-DOOL-toh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Cuatro de niño y dos de adulto" aria-label="Listen to Cuatro de niño y dos de adulto">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-terra">
+    <div class="section-header">
+      <div class="section-icon">🥘</div>
+      <h2>Ordering Food Like a Local</h2>
+    </div>
+    <p class="section-note">Spain runs on tapas, raciones, and sharing — here&#x27;s how to navigate it</p>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Para compartir</div>
+        <div class="phrase-en">To share</div>
+        <div class="phrase-pronun">PAH-rah kom-par-TEER</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Para compartir" aria-label="Listen to Para compartir">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Una tapa</div>
+        <div class="phrase-en">A small portion (appetizer size)</div>
+        <div class="phrase-pronun">OO-nah TAH-pah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Una tapa" aria-label="Listen to Una tapa">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Una ración</div>
+        <div class="phrase-en">A full-size sharing plate</div>
+        <div class="phrase-pronun">OO-nah rah-THYON</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Una ración" aria-label="Listen to Una ración">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Media ración</div>
+        <div class="phrase-en">A half portion</div>
+        <div class="phrase-pronun">MEH-dyah rah-THYON</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Media ración" aria-label="Listen to Media ración">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Nos pone unas tapas variadas?</div>
+        <div class="phrase-en">Can you bring us a mix of tapas?</div>
+        <div class="phrase-pronun">nos POH-neh OO-nas TAH-pas bah-RYAH-das</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Nos pone unas tapas variadas?" aria-label="Listen to ¿Nos pone unas tapas variadas?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Ponme otro</div>
+        <div class="phrase-en">Give me another one</div>
+        <div class="phrase-pronun">PON-meh OH-troh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Ponme otro" aria-label="Listen to Ponme otro">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Qué lleva este plato?</div>
+        <div class="phrase-en">What&#x27;s in this dish?</div>
+        <div class="phrase-pronun">keh YEH-vah ES-teh PLAH-toh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Qué lleva este plato?" aria-label="Listen to ¿Qué lleva este plato?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Está riquísimo</div>
+        <div class="phrase-en">This is delicious! (great compliment)</div>
+        <div class="phrase-pronun">es-TAH ree-KEE-see-moh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Está riquísimo" aria-label="Listen to Está riquísimo">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Tienen reserva?</div>
+        <div class="phrase-en">Do you take reservations?</div>
+        <div class="phrase-pronun">TYEH-nen reh-SEHR-vah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Tienen reserva?" aria-label="Listen to ¿Tienen reserva?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Tengo una reserva a nombre de...</div>
+        <div class="phrase-en">I have a reservation under the name...</div>
+        <div class="phrase-pronun">TEN-go OO-nah reh-SEHR-vah ah NOM-breh deh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Tengo una reserva a nombre de..." aria-label="Listen to Tengo una reserva a nombre de...">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-sun">
+    <div class="section-header">
+      <div class="section-icon">⚠️</div>
+      <h2>Allergies &amp; Dietary Needs</h2>
+    </div>
+    <p class="section-note">Waiters in Spain take allergies seriously — just ask</p>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Tengo alergia a...</div>
+        <div class="phrase-en">I&#x27;m allergic to...</div>
+        <div class="phrase-pronun">TEN-go ah-LEHR-hyah ah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Tengo alergia a..." aria-label="Listen to Tengo alergia a...">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Tiene gluten?</div>
+        <div class="phrase-en">Does it contain gluten?</div>
+        <div class="phrase-pronun">TYEH-neh GLOO-ten</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Tiene gluten?" aria-label="Listen to ¿Tiene gluten?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Tiene algo sin gluten?</div>
+        <div class="phrase-en">Do you have anything gluten-free?</div>
+        <div class="phrase-pronun">TYEH-neh AHL-go seen GLOO-ten</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Tiene algo sin gluten?" aria-label="Listen to ¿Tiene algo sin gluten?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Alergia a los frutos secos</div>
+        <div class="phrase-en">Nut allergy</div>
+        <div class="phrase-pronun">ah-LEHR-hyah ah los FROO-tos SEH-kos</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Alergia a los frutos secos" aria-label="Listen to Alergia a los frutos secos">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Alergia al marisco</div>
+        <div class="phrase-en">Shellfish allergy</div>
+        <div class="phrase-pronun">ah-LEHR-hyah al mah-REES-koh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Alergia al marisco" aria-label="Listen to Alergia al marisco">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Intolerancia a la lactosa</div>
+        <div class="phrase-en">Lactose intolerant</div>
+        <div class="phrase-pronun">in-toh-leh-RAHN-thyah ah lah lak-TOH-sah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Intolerancia a la lactosa" aria-label="Listen to Intolerancia a la lactosa">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Sin lácteos</div>
+        <div class="phrase-en">No dairy</div>
+        <div class="phrase-pronun">seen LAK-teh-os</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Sin lácteos" aria-label="Listen to Sin lácteos">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Esto lleva huevo?</div>
+        <div class="phrase-en">Does this have egg in it?</div>
+        <div class="phrase-pronun">ES-toh YEH-vah WEH-voh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Esto lleva huevo?" aria-label="Listen to ¿Esto lleva huevo?">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-terra">
+    <div class="section-header">
+      <div class="section-icon">🍕</div>
+      <h2>Kid-Friendly Food</h2>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Croquetas</div>
+        <div class="phrase-en">Fried béchamel bites (kids love these!)</div>
+        <div class="phrase-pronun">kro-KEH-tas</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Croquetas" aria-label="Listen to Croquetas">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Tortilla española</div>
+        <div class="phrase-en">Spanish potato omelette</div>
+        <div class="phrase-pronun">tor-TEE-yah es-pah-NYOH-lah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Tortilla española" aria-label="Listen to Tortilla española">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Patatas bravas</div>
+        <div class="phrase-en">Fried potatoes with spicy sauce</div>
+        <div class="phrase-pronun">pah-TAH-tas BRAH-vas</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Patatas bravas" aria-label="Listen to Patatas bravas">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Tienen macarrones?</div>
+        <div class="phrase-en">Do you have pasta?</div>
+        <div class="phrase-pronun">TYEH-nen mah-kah-RRO-nes</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Tienen macarrones?" aria-label="Listen to ¿Tienen macarrones?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Sin picante</div>
+        <div class="phrase-en">Not spicy</div>
+        <div class="phrase-pronun">seen pee-KAHN-teh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Sin picante" aria-label="Listen to Sin picante">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Solo con tomate</div>
+        <div class="phrase-en">Just with tomato sauce</div>
+        <div class="phrase-pronun">SOH-lo kon toh-MAH-teh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Solo con tomate" aria-label="Listen to Solo con tomate">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Un zumo de naranja</div>
+        <div class="phrase-en">An orange juice</div>
+        <div class="phrase-pronun">oon THOO-moh deh nah-RAHN-hah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Un zumo de naranja" aria-label="Listen to Un zumo de naranja">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-sky">
+    <div class="section-header">
+      <div class="section-icon">🗺️</div>
+      <h2>Getting Around</h2>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Dónde está el baño?</div>
+        <div class="phrase-en">Where is the bathroom?</div>
+        <div class="phrase-pronun">DOHN-deh es-TAH el BAH-nyo</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Dónde está el baño?" aria-label="Listen to ¿Dónde está el baño?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Dónde está el metro?</div>
+        <div class="phrase-en">Where is the metro?</div>
+        <div class="phrase-pronun">DOHN-deh es-TAH el MEH-tro</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Dónde está el metro?" aria-label="Listen to ¿Dónde está el metro?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Dónde está la playa?</div>
+        <div class="phrase-en">Where is the beach?</div>
+        <div class="phrase-pronun">DOHN-deh es-TAH lah PLY-ah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Dónde está la playa?" aria-label="Listen to ¿Dónde está la playa?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">A la derecha</div>
+        <div class="phrase-en">To the right</div>
+        <div class="phrase-pronun">ah lah deh-REH-chah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="A la derecha" aria-label="Listen to A la derecha">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">A la izquierda</div>
+        <div class="phrase-en">To the left</div>
+        <div class="phrase-pronun">ah lah eeth-KYER-dah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="A la izquierda" aria-label="Listen to A la izquierda">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Todo recto</div>
+        <div class="phrase-en">Straight ahead</div>
+        <div class="phrase-pronun">TOH-doh REK-toh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Todo recto" aria-label="Listen to Todo recto">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Necesitamos un taxi grande</div>
+        <div class="phrase-en">We need a big taxi</div>
+        <div class="phrase-pronun">neh-the-see-TAH-mos oon TAK-see GRAHN-deh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Necesitamos un taxi grande" aria-label="Listen to Necesitamos un taxi grande">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Somos seis personas</div>
+        <div class="phrase-en">We are six people</div>
+        <div class="phrase-pronun">SOH-mos SEH-ees per-SOH-nas</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Somos seis personas" aria-label="Listen to Somos seis personas">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-terra">
+    <div class="section-header">
+      <div class="section-icon">🚆</div>
+      <h2>Trains, Metro &amp; Transport</h2>
+    </div>
+    <p class="section-note">You&#x27;ll use the metro daily in Madrid and Barcelona</p>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Este tren va a Barcelona?</div>
+        <div class="phrase-en">Does this train go to Barcelona?</div>
+        <div class="phrase-pronun">ES-teh tren vah ah bar-theh-LOH-nah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Este tren va a Barcelona?" aria-label="Listen to ¿Este tren va a Barcelona?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Un billete de ida</div>
+        <div class="phrase-en">A one-way ticket</div>
+        <div class="phrase-pronun">oon bee-YEH-teh deh EE-dah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Un billete de ida" aria-label="Listen to Un billete de ida">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Un billete de ida y vuelta</div>
+        <div class="phrase-en">A round-trip ticket</div>
+        <div class="phrase-pronun">oon bee-YEH-teh deh EE-dah ee VWEL-tah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Un billete de ida y vuelta" aria-label="Listen to Un billete de ida y vuelta">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Cuál es la próxima parada?</div>
+        <div class="phrase-en">What&#x27;s the next stop?</div>
+        <div class="phrase-pronun">kwahl es lah PROK-see-mah pah-RAH-dah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Cuál es la próxima parada?" aria-label="Listen to ¿Cuál es la próxima parada?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Dónde tengo que bajar?</div>
+        <div class="phrase-en">Where do I need to get off?</div>
+        <div class="phrase-pronun">DOHN-deh TEN-go keh bah-HAR</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Dónde tengo que bajar?" aria-label="Listen to ¿Dónde tengo que bajar?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Hay que hacer transbordo?</div>
+        <div class="phrase-en">Do I need to transfer?</div>
+        <div class="phrase-pronun">eye keh ah-THER trans-BOR-doh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Hay que hacer transbordo?" aria-label="Listen to ¿Hay que hacer transbordo?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Dónde se compran los billetes?</div>
+        <div class="phrase-en">Where do you buy tickets?</div>
+        <div class="phrase-pronun">DOHN-deh seh KOM-pran los bee-YEH-tes</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Dónde se compran los billetes?" aria-label="Listen to ¿Dónde se compran los billetes?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Qué línea va a...?</div>
+        <div class="phrase-en">Which line goes to...?</div>
+        <div class="phrase-pronun">keh LEE-neh-ah vah ah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Qué línea va a...?" aria-label="Listen to ¿Qué línea va a...?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Está lejos?</div>
+        <div class="phrase-en">Is it far?</div>
+        <div class="phrase-pronun">es-TAH LEH-hos</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Está lejos?" aria-label="Listen to ¿Está lejos?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Se puede ir andando?</div>
+        <div class="phrase-en">Can you walk there?</div>
+        <div class="phrase-pronun">seh PWEH-deh eer ahn-DAHN-doh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Se puede ir andando?" aria-label="Listen to ¿Se puede ir andando?">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-olive">
+    <div class="section-header">
+      <div class="section-icon">🛍️</div>
+      <h2>Shopping &amp; Markets</h2>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Cuánto cuesta esto?</div>
+        <div class="phrase-en">How much is this?</div>
+        <div class="phrase-pronun">KWAHN-toh KWES-tah ES-toh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Cuánto cuesta esto?" aria-label="Listen to ¿Cuánto cuesta esto?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Demasiado caro</div>
+        <div class="phrase-en">Too expensive</div>
+        <div class="phrase-pronun">deh-mah-SYAH-doh KAH-roh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Demasiado caro" aria-label="Listen to Demasiado caro">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Me lo llevo</div>
+        <div class="phrase-en">I&#x27;ll take it</div>
+        <div class="phrase-pronun">meh lo YEH-voh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Me lo llevo" aria-label="Listen to Me lo llevo">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Puedo pagar con tarjeta?</div>
+        <div class="phrase-en">Can I pay by card?</div>
+        <div class="phrase-pronun">PWEH-doh pah-GAR kon tar-HEH-tah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Puedo pagar con tarjeta?" aria-label="Listen to ¿Puedo pagar con tarjeta?">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-sun">
+    <div class="section-header">
+      <div class="section-icon">🎟️</div>
+      <h2>Tickets &amp; Attractions</h2>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Dos adultos y cuatro niños</div>
+        <div class="phrase-en">Two adults and four children</div>
+        <div class="phrase-pronun">dos ah-DOOL-tos ee KWAH-tro NEE-nyos</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Dos adultos y cuatro niños" aria-label="Listen to Dos adultos y cuatro niños">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Seis entradas, por favor</div>
+        <div class="phrase-en">Six tickets, please</div>
+        <div class="phrase-pronun">SEH-ees en-TRAH-das</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Seis entradas, por favor" aria-label="Listen to Seis entradas, por favor">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Hay descuento para familias?</div>
+        <div class="phrase-en">Is there a family discount?</div>
+        <div class="phrase-pronun">eye des-KWEN-toh PAH-rah fah-MEE-lyas</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Hay descuento para familias?" aria-label="Listen to ¿Hay descuento para familias?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Los niños entran gratis?</div>
+        <div class="phrase-en">Do the kids get in free?</div>
+        <div class="phrase-pronun">los NEE-nyos EN-tran GRAH-tees</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Los niños entran gratis?" aria-label="Listen to ¿Los niños entran gratis?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Hay descuento para menores de doce?</div>
+        <div class="phrase-en">Discount for under 12?</div>
+        <div class="phrase-pronun">eye des-KWEN-toh PAH-rah meh-NOH-res deh DOH-theh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Hay descuento para menores de doce?" aria-label="Listen to ¿Hay descuento para menores de doce?">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-terra">
+    <div class="section-header">
+      <div class="section-icon">🕐</div>
+      <h2>Time &amp; Opening Hours</h2>
+    </div>
+    <p class="section-note">Many shops close 2–5pm for siesta — always check!</p>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿A qué hora abre?</div>
+        <div class="phrase-en">What time does it open?</div>
+        <div class="phrase-pronun">ah keh OH-rah AH-breh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿A qué hora abre?" aria-label="Listen to ¿A qué hora abre?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿A qué hora cierra?</div>
+        <div class="phrase-en">What time does it close?</div>
+        <div class="phrase-pronun">ah keh OH-rah THYEH-rah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿A qué hora cierra?" aria-label="Listen to ¿A qué hora cierra?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Está abierto?</div>
+        <div class="phrase-en">Is it open?</div>
+        <div class="phrase-pronun">es-TAH ah-BYEHR-toh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Está abierto?" aria-label="Listen to ¿Está abierto?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Está cerrado?</div>
+        <div class="phrase-en">Is it closed?</div>
+        <div class="phrase-pronun">es-TAH theh-RRAH-doh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Está cerrado?" aria-label="Listen to ¿Está cerrado?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿A qué hora es la última entrada?</div>
+        <div class="phrase-en">What time is last entry?</div>
+        <div class="phrase-pronun">ah keh OH-rah es lah OOL-tee-mah en-TRAH-dah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿A qué hora es la última entrada?" aria-label="Listen to ¿A qué hora es la última entrada?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Cuánto se tarda?</div>
+        <div class="phrase-en">How long does it take?</div>
+        <div class="phrase-pronun">KWAHN-toh seh TAR-dah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Cuánto se tarda?" aria-label="Listen to ¿Cuánto se tarda?">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-sky">
+    <div class="section-header">
+      <div class="section-icon">📸</div>
+      <h2>Photos &amp; Memories</h2>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Puede hacernos una foto?</div>
+        <div class="phrase-en">Can you take a photo of us?</div>
+        <div class="phrase-pronun">PWEH-deh ah-THER-nos OO-nah FOH-toh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Puede hacernos una foto?" aria-label="Listen to ¿Puede hacernos una foto?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Solo tiene que pulsar aquí</div>
+        <div class="phrase-en">Just press here</div>
+        <div class="phrase-pronun">SOH-lo TYEH-neh keh pool-SAR ah-KEE</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Solo tiene que pulsar aquí" aria-label="Listen to Solo tiene que pulsar aquí">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Nos hacemos un selfie?</div>
+        <div class="phrase-en">Shall we take a selfie?</div>
+        <div class="phrase-pronun">nos ah-THEH-mos oon SEL-fee</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Nos hacemos un selfie?" aria-label="Listen to ¿Nos hacemos un selfie?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¡Sonreíd!</div>
+        <div class="phrase-en">Smile! (to your kids)</div>
+        <div class="phrase-pronun">son-reh-EED</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¡Sonreíd!" aria-label="Listen to ¡Sonreíd!">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Se puede hacer fotos aquí?</div>
+        <div class="phrase-en">Is photography allowed here?</div>
+        <div class="phrase-pronun">seh PWEH-deh ah-THER FOH-tos ah-KEE</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Se puede hacer fotos aquí?" aria-label="Listen to ¿Se puede hacer fotos aquí?">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-olive">
+    <div class="section-header">
+      <div class="section-icon">🏨</div>
+      <h2>At the Hotel</h2>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Tengo una reserva</div>
+        <div class="phrase-en">I have a reservation</div>
+        <div class="phrase-pronun">TEN-go OO-nah reh-SEHR-vah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Tengo una reserva" aria-label="Listen to Tengo una reserva">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Necesitamos una habitación familiar</div>
+        <div class="phrase-en">We need a family room</div>
+        <div class="phrase-pronun">neh-theh-see-TAH-mos OO-nah ah-bee-tah-THYON fah-mee-LYAR</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Necesitamos una habitación familiar" aria-label="Listen to Necesitamos una habitación familiar">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿A qué hora es el desayuno?</div>
+        <div class="phrase-en">What time is breakfast?</div>
+        <div class="phrase-pronun">ah keh OH-rah es el deh-sah-YOO-noh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿A qué hora es el desayuno?" aria-label="Listen to ¿A qué hora es el desayuno?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Nos pueden poner una cama extra?</div>
+        <div class="phrase-en">Can you add an extra bed?</div>
+        <div class="phrase-pronun">nos PWEH-den po-NEHR OO-nah KAH-mah EKS-trah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Nos pueden poner una cama extra?" aria-label="Listen to ¿Nos pueden poner una cama extra?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Necesitamos más toallas</div>
+        <div class="phrase-en">We need more towels</div>
+        <div class="phrase-pronun">neh-theh-see-TAH-mos mahs toh-AH-yas</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Necesitamos más toallas" aria-label="Listen to Necesitamos más toallas">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">No funciona el aire acondicionado</div>
+        <div class="phrase-en">The air conditioning doesn&#x27;t work</div>
+        <div class="phrase-pronun">no foon-THYOH-nah el AY-reh ah-kon-dee-thyoh-NAH-doh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="No funciona el aire acondicionado" aria-label="Listen to No funciona el aire acondicionado">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Pueden guardar las maletas?</div>
+        <div class="phrase-en">Can you store our luggage?</div>
+        <div class="phrase-pronun">PWEH-den gwahr-DAR las mah-LEH-tas</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Pueden guardar las maletas?" aria-label="Listen to ¿Pueden guardar las maletas?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Tienen cuna?</div>
+        <div class="phrase-en">Do you have a crib?</div>
+        <div class="phrase-pronun">TYEH-nen KOO-nah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Tienen cuna?" aria-label="Listen to ¿Tienen cuna?">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-sky">
+    <div class="section-header">
+      <div class="section-icon">🏖️</div>
+      <h2>Beach &amp; Outdoors</h2>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Se puede nadar aquí?</div>
+        <div class="phrase-en">Can you swim here?</div>
+        <div class="phrase-pronun">seh PWEH-deh nah-DAR ah-KEE</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Se puede nadar aquí?" aria-label="Listen to ¿Se puede nadar aquí?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Hay socorrista?</div>
+        <div class="phrase-en">Is there a lifeguard?</div>
+        <div class="phrase-pronun">eye so-ko-RREE-stah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Hay socorrista?" aria-label="Listen to ¿Hay socorrista?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Seis hamacas, por favor</div>
+        <div class="phrase-en">Six lounge chairs, please</div>
+        <div class="phrase-pronun">SEH-ees ah-MAH-kas</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Seis hamacas, por favor" aria-label="Listen to Seis hamacas, por favor">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Tiene sombrillas?</div>
+        <div class="phrase-en">Do you have umbrellas?</div>
+        <div class="phrase-pronun">TYEH-neh som-BREE-yas</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Tiene sombrillas?" aria-label="Listen to ¿Tiene sombrillas?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Es seguro para niños?</div>
+        <div class="phrase-en">Is it safe for kids?</div>
+        <div class="phrase-pronun">es seh-GOO-roh PAH-rah NEE-nyos</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Es seguro para niños?" aria-label="Listen to ¿Es seguro para niños?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Crema solar</div>
+        <div class="phrase-en">Sunscreen</div>
+        <div class="phrase-pronun">KREH-mah so-LAR</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Crema solar" aria-label="Listen to Crema solar">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-sun">
+    <div class="section-header">
+      <div class="section-icon">☀️</div>
+      <h2>Summer Heat &amp; Comfort</h2>
+    </div>
+    <p class="section-note">Madrid in summer can hit 40°C (104°F) — be prepared</p>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¡Qué calor!</div>
+        <div class="phrase-en">It&#x27;s so hot! (you&#x27;ll say this daily)</div>
+        <div class="phrase-pronun">keh kah-LOR</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¡Qué calor!" aria-label="Listen to ¡Qué calor!">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Hay algún sitio con sombra?</div>
+        <div class="phrase-en">Is there somewhere with shade?</div>
+        <div class="phrase-pronun">eye ahl-GOON SEE-tyoh kon SOM-brah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Hay algún sitio con sombra?" aria-label="Listen to ¿Hay algún sitio con sombra?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Tienen aire acondicionado?</div>
+        <div class="phrase-en">Do you have air conditioning?</div>
+        <div class="phrase-pronun">TYEH-nen AY-reh ah-kon-dee-thyoh-NAH-doh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Tienen aire acondicionado?" aria-label="Listen to ¿Tienen aire acondicionado?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Necesitamos agua</div>
+        <div class="phrase-en">We need water</div>
+        <div class="phrase-pronun">neh-theh-see-TAH-mos AH-gwah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Necesitamos agua" aria-label="Listen to Necesitamos agua">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Dónde hay una fuente?</div>
+        <div class="phrase-en">Where is a drinking fountain?</div>
+        <div class="phrase-pronun">DOHN-deh eye OO-nah FWEN-teh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Dónde hay una fuente?" aria-label="Listen to ¿Dónde hay una fuente?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Se puede beber el agua del grifo?</div>
+        <div class="phrase-en">Is the tap water safe to drink?</div>
+        <div class="phrase-pronun">seh PWEH-deh beh-BEHR el AH-gwah del GREE-foh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Se puede beber el agua del grifo?" aria-label="Listen to ¿Se puede beber el agua del grifo?">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-olive">
+    <div class="section-header">
+      <div class="section-icon">👨‍👩‍👧‍👦</div>
+      <h2>For the Kids</h2>
+    </div>
+    <p class="section-note">Teach your 6-year-old &#x27;Hola&#x27; and &#x27;Gracias&#x27; — guaranteed to charm everyone</p>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Tengo hambre</div>
+        <div class="phrase-en">I&#x27;m hungry</div>
+        <div class="phrase-pronun">TEN-go AHM-breh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Tengo hambre" aria-label="Listen to Tengo hambre">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Tengo sed</div>
+        <div class="phrase-en">I&#x27;m thirsty</div>
+        <div class="phrase-pronun">TEN-go sed</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Tengo sed" aria-label="Listen to Tengo sed">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Tengo calor</div>
+        <div class="phrase-en">I&#x27;m hot</div>
+        <div class="phrase-pronun">TEN-go kah-LOR</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Tengo calor" aria-label="Listen to Tengo calor">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Necesito ir al baño</div>
+        <div class="phrase-en">I need the bathroom</div>
+        <div class="phrase-pronun">neh-theh-SEE-toh eer al BAH-nyo</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Necesito ir al baño" aria-label="Listen to Necesito ir al baño">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Quiero un helado</div>
+        <div class="phrase-en">I want ice cream</div>
+        <div class="phrase-pronun">KYEH-roh oon eh-LAH-doh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Quiero un helado" aria-label="Listen to Quiero un helado">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Hay un parque infantil cerca?</div>
+        <div class="phrase-en">Is there a playground nearby?</div>
+        <div class="phrase-pronun">eye oon PAR-keh in-fan-TEEL THER-kah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Hay un parque infantil cerca?" aria-label="Listen to ¿Hay un parque infantil cerca?">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-terra">
+    <div class="section-header">
+      <div class="section-icon">📢</div>
+      <h2>Parent Commands</h2>
+    </div>
+    <p class="section-note">Things you&#x27;ll say a million times...</p>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¡No os alejéis!</div>
+        <div class="phrase-en">Don&#x27;t wander off!</div>
+        <div class="phrase-pronun">no os ah-leh-HEH-ees</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¡No os alejéis!" aria-label="Listen to ¡No os alejéis!">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Esperad aquí</div>
+        <div class="phrase-en">Wait here</div>
+        <div class="phrase-pronun">es-peh-RAHD ah-KEE</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Esperad aquí" aria-label="Listen to Esperad aquí">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Quedaos juntos</div>
+        <div class="phrase-en">Stay together</div>
+        <div class="phrase-pronun">keh-DAH-os HOON-tos</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Quedaos juntos" aria-label="Listen to Quedaos juntos">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Daos prisa</div>
+        <div class="phrase-en">Hurry up</div>
+        <div class="phrase-pronun">DAH-os PREE-sah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Daos prisa" aria-label="Listen to Daos prisa">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Tened cuidado</div>
+        <div class="phrase-en">Be careful</div>
+        <div class="phrase-pronun">teh-NED kwee-DAH-doh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Tened cuidado" aria-label="Listen to Tened cuidado">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Portaos bien</div>
+        <div class="phrase-en">Behave yourselves</div>
+        <div class="phrase-pronun">por-TAH-os BYEN</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Portaos bien" aria-label="Listen to Portaos bien">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-sky">
+    <div class="section-header">
+      <div class="section-icon">🛒</div>
+      <h2>For Your 16-Year-Old</h2>
+    </div>
+    <p class="section-note">Shopping, wifi, and independence</p>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Cuál es la contraseña del wifi?</div>
+        <div class="phrase-en">What&#x27;s the wifi password?</div>
+        <div class="phrase-pronun">kwahl es lah kon-trah-SEH-nyah del WEE-fee</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Cuál es la contraseña del wifi?" aria-label="Listen to ¿Cuál es la contraseña del wifi?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Puedo probármelo?</div>
+        <div class="phrase-en">Can I try this on?</div>
+        <div class="phrase-pronun">PWEH-doh pro-BAR-meh-loh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Puedo probármelo?" aria-label="Listen to ¿Puedo probármelo?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Tiene otra talla?</div>
+        <div class="phrase-en">Do you have another size?</div>
+        <div class="phrase-pronun">TYEH-neh OH-trah TAH-yah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Tiene otra talla?" aria-label="Listen to ¿Tiene otra talla?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Dónde hay tiendas?</div>
+        <div class="phrase-en">Where are the shops?</div>
+        <div class="phrase-pronun">DOHN-deh eye TYEN-das</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Dónde hay tiendas?" aria-label="Listen to ¿Dónde hay tiendas?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Puedo hacer una foto?</div>
+        <div class="phrase-en">Can I take a photo?</div>
+        <div class="phrase-pronun">PWEH-doh ah-THER oo-nah FOH-toh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Puedo hacer una foto?" aria-label="Listen to ¿Puedo hacer una foto?">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-olive">
+    <div class="section-header">
+      <div class="section-icon">🤙</div>
+      <h2>Fun Spanish Slang</h2>
+    </div>
+    <p class="section-note">Sound like a local — your kids will love these</p>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¡Mola!</div>
+        <div class="phrase-en">Cool!</div>
+        <div class="phrase-pronun">MOH-lah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¡Mola!" aria-label="Listen to ¡Mola!">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¡Mola mucho!</div>
+        <div class="phrase-en">So cool!</div>
+        <div class="phrase-pronun">MOH-lah MOO-cho</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¡Mola mucho!" aria-label="Listen to ¡Mola mucho!">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¡Flipante!</div>
+        <div class="phrase-en">Awesome! / Mind-blowing!</div>
+        <div class="phrase-pronun">flee-PAHN-teh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¡Flipante!" aria-label="Listen to ¡Flipante!">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¡Qué guay!</div>
+        <div class="phrase-en">How cool!</div>
+        <div class="phrase-pronun">keh GWIE</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¡Qué guay!" aria-label="Listen to ¡Qué guay!">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Tío / Tía</div>
+        <div class="phrase-en">Dude / Girl (casual)</div>
+        <div class="phrase-pronun">TEE-oh / TEE-ah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Tío / Tía" aria-label="Listen to Tío / Tía">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Vale</div>
+        <div class="phrase-en">OK / Sure / Alright</div>
+        <div class="phrase-pronun">BAH-leh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Vale" aria-label="Listen to Vale">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-sun">
+    <div class="section-header">
+      <div class="section-icon">💊</div>
+      <h2>At the Pharmacy</h2>
+    </div>
+    <p class="section-note">Spanish pharmacists can recommend remedies directly — look for the green cross</p>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Dónde hay una farmacia?</div>
+        <div class="phrase-en">Where is a pharmacy?</div>
+        <div class="phrase-pronun">DOHN-deh eye OO-nah far-MAH-thyah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Dónde hay una farmacia?" aria-label="Listen to ¿Dónde hay una farmacia?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Mi hijo está enfermo</div>
+        <div class="phrase-en">My son is sick</div>
+        <div class="phrase-pronun">mee EE-hoh es-TAH en-FEHR-moh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Mi hijo está enfermo" aria-label="Listen to Mi hijo está enfermo">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Le duele la tripa</div>
+        <div class="phrase-en">His/her stomach hurts</div>
+        <div class="phrase-pronun">leh DWEH-leh lah TREE-pah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Le duele la tripa" aria-label="Listen to Le duele la tripa">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Tiene fiebre</div>
+        <div class="phrase-en">He/she has a fever</div>
+        <div class="phrase-pronun">TYEH-neh FYEH-breh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Tiene fiebre" aria-label="Listen to Tiene fiebre">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Se ha quemado con el sol</div>
+        <div class="phrase-en">He/she got sunburned</div>
+        <div class="phrase-pronun">seh ah keh-MAH-doh kon el sol</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Se ha quemado con el sol" aria-label="Listen to Se ha quemado con el sol">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Tiene algo para el dolor de cabeza?</div>
+        <div class="phrase-en">Do you have something for a headache?</div>
+        <div class="phrase-pronun">TYEH-neh AHL-go PAH-rah el doh-LOR deh kah-BEH-thah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Tiene algo para el dolor de cabeza?" aria-label="Listen to ¿Tiene algo para el dolor de cabeza?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Tiene tiritas?</div>
+        <div class="phrase-en">Do you have band-aids?</div>
+        <div class="phrase-pronun">TYEH-neh tee-REE-tas</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Tiene tiritas?" aria-label="Listen to ¿Tiene tiritas?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Ibuprofeno para niños</div>
+        <div class="phrase-en">Children&#x27;s ibuprofen</div>
+        <div class="phrase-pronun">ee-boo-pro-FEH-noh PAH-rah NEE-nyos</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Ibuprofeno para niños" aria-label="Listen to Ibuprofeno para niños">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Le ha picado algo</div>
+        <div class="phrase-en">Something bit/stung him/her</div>
+        <div class="phrase-pronun">leh ah pee-KAH-doh AHL-go</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Le ha picado algo" aria-label="Listen to Le ha picado algo">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Tiene diarrea</div>
+        <div class="phrase-en">He/she has diarrhea</div>
+        <div class="phrase-pronun">TYEH-neh dyah-RREH-ah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Tiene diarrea" aria-label="Listen to Tiene diarrea">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-terra">
+    <div class="section-header">
+      <div class="section-icon">🚨</div>
+      <h2>Help &amp; Emergencies</h2>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">No hablo mucho español</div>
+        <div class="phrase-en">I don&#x27;t speak much Spanish</div>
+        <div class="phrase-pronun">no AH-bloh MOO-cho es-pah-NYOL</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="No hablo mucho español" aria-label="Listen to No hablo mucho español">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">¿Habla inglés?</div>
+        <div class="phrase-en">Do you speak English?</div>
+        <div class="phrase-pronun">AH-blah in-GLES</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="¿Habla inglés?" aria-label="Listen to ¿Habla inglés?">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">No entiendo</div>
+        <div class="phrase-en">I don&#x27;t understand</div>
+        <div class="phrase-pronun">no en-TYEN-doh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="No entiendo" aria-label="Listen to No entiendo">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Más despacio, por favor</div>
+        <div class="phrase-en">More slowly, please</div>
+        <div class="phrase-pronun">mahs des-PAH-thee-oh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Más despacio, por favor" aria-label="Listen to Más despacio, por favor">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Necesito ayuda</div>
+        <div class="phrase-en">I need help</div>
+        <div class="phrase-pronun">neh-theh-SEE-toh ah-YOO-dah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Necesito ayuda" aria-label="Listen to Necesito ayuda">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Necesito un médico</div>
+        <div class="phrase-en">I need a doctor</div>
+        <div class="phrase-pronun">neh-theh-SEE-toh oon MEH-dee-koh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Necesito un médico" aria-label="Listen to Necesito un médico">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Llama a la policía</div>
+        <div class="phrase-en">Call the police</div>
+        <div class="phrase-pronun">YAH-mah ah lah po-lee-THEE-ah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Llama a la policía" aria-label="Listen to Llama a la policía">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="section theme-sky">
+    <div class="section-header">
+      <div class="section-icon">🔢</div>
+      <h2>Numbers</h2>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Uno, dos, tres</div>
+        <div class="phrase-en">1, 2, 3</div>
+        <div class="phrase-pronun">OO-noh, dos, tres</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Uno, dos, tres" aria-label="Listen to Uno, dos, tres">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Cuatro, cinco, seis</div>
+        <div class="phrase-en">4, 5, 6</div>
+        <div class="phrase-pronun">KWAH-tro, THEEN-koh, SEH-ees</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Cuatro, cinco, seis" aria-label="Listen to Cuatro, cinco, seis">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Siete, ocho, nueve, diez</div>
+        <div class="phrase-en">7, 8, 9, 10</div>
+        <div class="phrase-pronun">SYEH-teh, OH-cho, NWEH-veh, DYETH</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Siete, ocho, nueve, diez" aria-label="Listen to Siete, ocho, nueve, diez">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Veinte</div>
+        <div class="phrase-en">20</div>
+        <div class="phrase-pronun">VEYN-teh</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Veinte" aria-label="Listen to Veinte">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Cincuenta</div>
+        <div class="phrase-en">50</div>
+        <div class="phrase-pronun">theen-KWEN-tah</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Cincuenta" aria-label="Listen to Cincuenta">&#x1F50A;</button>
+    </div>
+    <div class="phrase">
+      <div class="phrase-content">
+        <div class="phrase-es">Cien</div>
+        <div class="phrase-en">100</div>
+        <div class="phrase-pronun">THYEN</div>
+      </div>
+      <button class="play-btn" onclick="spk(this)" data-text="Cien" aria-label="Listen to Cien">&#x1F50A;</button>
+    </div>
+  </div>
+
+  <div class="tips-box">
+    <h3>&#x1F5E3;&#xFE0F; Spain Spanish Pronunciation Tips</h3>
+    <ul>
+      <li><strong>C</strong> before E or I = &#8220;TH&#8221; sound (like &#8220;think&#8221;). <em>Gracias</em> &#8594; &#8220;GRAH-thee-as&#8221;</li>
+      <li><strong>Z</strong> = always &#8220;TH&#8221; sound. <em>Plaza</em> &#8594; &#8220;PLAH-thah&#8221;</li>
+      <li><strong>J</strong> = strong &#8220;H&#8221; sound from the throat. <em>Hijo</em> &#8594; &#8220;EE-hoh&#8221;</li>
+      <li><strong>LL</strong> = &#8220;Y&#8221; sound. <em>Calle</em> &#8594; &#8220;KAH-yeh&#8221;</li>
+      <li><strong>&Ntilde;</strong> = &#8220;NY&#8221; sound. <em>Espa&ntilde;a</em> &#8594; &#8220;es-PAH-nyah&#8221;</li>
+      <li><strong>H</strong> = always silent. <em>Hola</em> &#8594; &#8220;OH-lah&#8221;</li>
+      <li><strong>RR</strong> = rolled R. Practice by saying &#8220;butter&#8221; fast &#8212; the &#8220;tt&#8221; is close!</li>
+      <li><strong>V</strong> = sounds like B. <em>V&aacute;monos</em> &#8594; &#8220;BAH-moh-nos&#8221;</li>
+    </ul>
+  </div>
+
+  <div class="footer">Made for your family trip to Spain &#x1F1EA;&#x1F1F8; &#161;Buen viaje!</div>
+</div>
+
+</body>
+</html>
